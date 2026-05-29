@@ -1,0 +1,316 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+
+  /* ── Type scale: Minor Third (1.2), base 16px ─────────────────────────────
+     Product UI scale. xs/sm/base are static. lg+ are fluid via clamp().
+     Letter-spacing tightens progressively; unitless line-height.
+  ── */
+
+  /* Static small sizes — never fluid-scale caption or label text */
+  --text-xs: 0.75rem;          /* 12px */
+  --text-xs--line-height: 1rem;
+  --text-xs--letter-spacing: 0;
+
+  --text-sm: 0.875rem;         /* 14px */
+  --text-sm--line-height: 1.25rem;
+  --text-sm--letter-spacing: 0;
+
+  --text-base: 1rem;           /* 16px */
+  --text-base--line-height: 1.5rem;
+  --text-base--letter-spacing: 0;
+
+  /* Fluid heading sizes */
+  --text-lg: clamp(1rem, 0.95rem + 0.19vw, 1.125rem);   /* 16→18px */
+  --text-lg--line-height: 1.75rem;
+  --text-lg--letter-spacing: 0;
+
+  --text-xl: clamp(1.125rem, 1.08rem + 0.19vw, 1.25rem); /* 18→20px */
+  --text-xl--line-height: 1.75rem;
+  --text-xl--letter-spacing: -0.01em;
+
+  --text-2xl: clamp(1.25rem, 1.16rem + 0.38vw, 1.5rem);  /* 20→24px */
+  --text-2xl--line-height: 2rem;
+  --text-2xl--letter-spacing: -0.015em;
+
+  --text-3xl: clamp(1.5rem, 1.36rem + 0.56vw, 1.875rem); /* 24→30px */
+  --text-3xl--line-height: 2.25rem;
+  --text-3xl--letter-spacing: -0.02em;
+
+  --text-4xl: clamp(1.75rem, 1.57rem + 0.75vw, 2.25rem); /* 28→36px */
+  --text-4xl--line-height: 2.5rem;
+  --text-4xl--letter-spacing: -0.02em;
+
+  --text-5xl: clamp(2rem, 1.63rem + 1.5vw, 3rem);        /* 32→48px */
+  --text-5xl--line-height: 1;
+  --text-5xl--letter-spacing: -0.025em;
+
+  --text-6xl: clamp(2.25rem, 1.69rem + 2.25vw, 3.75rem); /* 36→60px */
+  --text-6xl--line-height: 1;
+  --text-6xl--letter-spacing: -0.025em;
+
+  --text-7xl: clamp(2.5rem, 1.75rem + 3.01vw, 4.5rem);   /* 40→72px */
+  --text-7xl--line-height: 1;
+  --text-7xl--letter-spacing: -0.025em;
+
+  --text-8xl: clamp(3rem, 1.87rem + 4.51vw, 6rem);       /* 48→96px */
+  --text-8xl--line-height: 1;
+  --text-8xl--letter-spacing: -0.025em;
+  --color-app-canvas: var(--color-canvas);
+  --color-app-surface: var(--color-surface);
+  --color-app-surface-elevated: var(--color-surface-elevated);
+  --color-app-border: var(--color-border);
+  --color-app-text-primary: var(--color-text-primary);
+  --color-app-text-secondary: var(--color-text-secondary);
+  --color-app-accent: var(--color-accent);
+  --color-app-danger: var(--color-danger);
+}
+
+:root {
+  color-scheme: light;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    'SF Pro Text',
+    'SF Pro Display',
+    'Helvetica Neue',
+    Arial,
+    'Segoe UI',
+    sans-serif;
+  --color-canvas: #f5f5f7;
+  --color-canvas-raised: #fbfbfd;
+  --color-surface: rgba(255, 255, 255, 0.86);
+  --color-surface-elevated: #ffffff;
+  --color-surface-hover: #f1f2f4;
+  --color-field: #ffffff;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-border-strong: rgba(0, 0, 0, 0.18);
+  --color-text-primary: #1d1d1f;
+  --color-text-secondary: #515154;
+  --color-text-tertiary: #86868b;
+  --color-accent: #0071e3;
+  --color-accent-strong: #005bbf;
+  --color-accent-soft: rgba(0, 113, 227, 0.18);
+  --color-danger: #d70015;
+  --color-danger-soft: rgba(215, 0, 21, 0.1);
+  --tile-border: rgba(0, 0, 0, 0.08);
+  --tile-future: #ececf0;
+  --tile-today: #fff7d6;
+  --tile-today-border: #f0c33c;
+  --tile-today-ring: rgba(240, 195, 60, 0.38);
+  --tile-clean: #e8f4ec;
+  --tile-clean-border: #c6decf;
+  --tile-1: #9ed8b1;
+  --tile-2: #64bd82;
+  --tile-3: #269955;
+  --tile-4: #0d6b3a;
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-panel: 0 24px 80px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  --shadow-button: 0 12px 30px rgba(0, 113, 227, 0.24);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --color-canvas: #111111;
+    --color-canvas-raised: #1c1c1e;
+    --color-surface: rgba(255, 255, 255, 0.06);
+    --color-surface-elevated: #2c2c2e;
+    --color-surface-hover: rgba(255, 255, 255, 0.06);
+    --color-field: #1c1c1e;
+    --color-border: rgba(255, 255, 255, 0.1);
+    --color-border-strong: rgba(255, 255, 255, 0.2);
+    --color-text-primary: #f5f5f7;
+    --color-text-secondary: #a1a1a6;
+    --color-text-tertiary: #6e6e73;
+    --color-accent: #0a84ff;
+    --color-accent-strong: #409cff;
+    --color-accent-soft: rgba(10, 132, 255, 0.2);
+    --color-danger: #ff453a;
+    --color-danger-soft: rgba(255, 69, 58, 0.15);
+    --tile-border: rgba(255, 255, 255, 0.08);
+    --tile-future: #141416;
+    --tile-today: #f5d76a;
+    --tile-today-border: #f5d76a;
+    --tile-today-ring: rgba(245, 215, 106, 0.28);
+    --tile-clean: #1a2e20;
+    --tile-clean-border: rgba(255, 255, 255, 0.08);
+    --tile-1: #7bd88f;
+    --tile-2: #44b86b;
+    --tile-3: #208c4b;
+    --tile-4: #0d6235;
+    --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-panel: 0 24px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    --shadow-button: 0 8px 24px rgba(10, 132, 255, 0.3);
+  }
+
+  ::selection {
+    background: rgba(10, 132, 255, 0.25);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: var(--color-canvas);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--color-canvas);
+  color: var(--color-text-primary);
+  font-size: 15px;
+  line-height: 1.45;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+/* ── Semantic type utilities ───────────────────────────────────────────────
+   Use these instead of arbitrary text-[Xpx] values.
+   Dark mode bumps weight by one step (irradiation effect: white-on-dark
+   reads lighter than dark-on-light at the same weight).
+── */
+@layer components {
+  /* Caption — timestamps, metadata, helper text: 12px/400 */
+  .type-caption {
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1rem;
+    letter-spacing: 0;
+  }
+
+  /* Label — form labels, nav items, badges: 14px/500 */
+  .type-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    letter-spacing: 0;
+  }
+
+  /* Overline — uppercase eyebrow labels: 11px/700, all-caps
+     Dark mode: weight 700 to compensate for irradiation. */
+  .type-overline {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Unit label — labels under large display numbers (days/hours/minutes)
+     Must be heavier than body to read against dominant display text above.
+     16px/600 uppercase — scales proportionally under 60-152px numbers. */
+  .type-unit {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* Context — secondary info line, no transform: 15px/400 */
+  .type-context {
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+
+  /* Heading sm — card titles, section labels: 20px/600 */
+  .type-heading-sm {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  /* Heading — section headings H3: 24px/600 */
+  .type-heading {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.33;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  /* Title — page titles H1: 36px/700 */
+  .type-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.11;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+}
+
+::selection {
+  background: rgba(0, 113, 227, 0.18);
+  color: var(--color-text-primary);
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  appearance: textfield;
+}
+
+.blocked-screen {
+  color-scheme: dark;
+  --color-canvas: #080809;
+  --color-text-primary: #f5f5f7;
+  --color-text-secondary: #a1a1a6;
+  --color-text-tertiary: #636368;
+  --tile-border: rgba(255, 255, 255, 0.06);
+  --tile-future: #1e1e23;
+  --tile-today: #e8c55a;
+  --tile-today-border: #e8c55a;
+  --tile-today-ring: rgba(232, 197, 90, 0.5);
+  --tile-clean: #162019;
+  --tile-clean-border: rgba(80, 160, 100, 0.18);
+  --tile-1: #7bd88f;
+  --tile-2: #44b86b;
+  --tile-3: #208c4b;
+  --tile-4: #0d6235;
+}
+
+.blocked-copy {
+  animation: blocked-copy-enter 180ms cubic-bezier(0.215, 0.61, 0.355, 1) both;
+  will-change: opacity, transform;
+}
+
+@keyframes blocked-copy-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blocked-copy {
+    animation: none;
+    will-change: auto;
+  }
+}

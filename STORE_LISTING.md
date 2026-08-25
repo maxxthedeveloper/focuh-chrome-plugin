@@ -16,10 +16,10 @@ Recommended:
 ## Listing Copy
 
 Name:
-Focuh Challenge
+Focuh: ADHD Website Blocker for Chrome
 
 Short description:
-Block distracting websites during a self-imposed focus challenge.
+Free unlimited website blocker for Chrome. No account, no 3-site cap. ADHD-friendly focus challenges, stored locally.
 
 Detailed description:
 Focuh Challenge helps you protect your attention by blocking the websites you choose for a challenge period you set.

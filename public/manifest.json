@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Focuh Challenge",
-  "description": "Block distracting websites during a self-imposed focus challenge.",
-  "version": "0.1.0",
+  "name": "Focuh: ADHD Website Blocker for Chrome",
+  "description": "Free unlimited website blocker for Chrome. No account, no 3-site cap. ADHD-friendly focus challenges, stored locally.",
+  "version": "0.1.2",
   "icons": {
     "16": "icons/icon-16.png",
     "32": "icons/icon-32.png",
@@ -17,7 +17,7 @@
   },
   "options_page": "options.html",
   "action": {
-    "default_title": "Focuh Challenge",
+    "default_title": "Focuh",
     "default_icon": {
       "16": "icons/icon-16.png",
       "32": "icons/icon-32.png",

@@ -1,28 +1,33 @@
-# Focuh Challenge Privacy Policy
+# Focuh Privacy Policy
 
-Effective date: May 29, 2026
+Effective date: August 12, 2026
 
-Focuh Challenge is a local-first Chrome extension for blocking distracting websites during a focus challenge.
+Focuh is a local-first Chrome extension for blocking distracting websites during a focus challenge.
 
 ## Data the extension stores
 
-Focuh Challenge stores the following data in Chrome's local extension storage on your device:
+Focuh stores the following data in Chrome's local extension storage on your device:
 
 - The domains you choose to block.
 - Your challenge start and end dates.
 - Daily counts of blocked-site attempts.
+- Your optional work-hours schedule (days and times when blocking applies).
+- Your optional daily time limit and daily counters of time spent on blocked sites.
+- A small transient record of the tab currently being timed, used only while a blocked site is open on your allowance.
 
 ## Data the extension processes
 
-When you navigate to a webpage, Focuh Challenge checks the top-level page hostname against your blocked-domain list. If the hostname matches during an active challenge, the extension redirects the tab to its local blocked page and increments that day's attempt count.
+When you navigate to a webpage, Focuh checks the top-level page hostname against your blocked-domain list. If the hostname matches during an active challenge, the extension redirects the tab to its local blocked page and increments that day's attempt count.
+
+If you enable the optional daily time limit, Focuh locally tracks how long a blocked site is the active tab, and checks your device's idle state so time away from the keyboard is not counted. Idle state and active-tab checks are processed locally and are never stored beyond the counters above or transmitted anywhere.
 
 ## Data sharing
 
-Focuh Challenge does not sell, share, transfer, or transmit your data. The extension does not send your blocked domains, browsing activity, attempt counts, or challenge settings to any external server.
+Focuh does not sell, share, transfer, or transmit your data. The extension does not send your blocked domains, browsing activity, attempt counts, or challenge settings to any external server.
 
 ## Remote code and analytics
 
-Focuh Challenge does not load remote code. It does not use analytics, advertising SDKs, tracking pixels, or third-party telemetry.
+Focuh does not load remote code. It does not use analytics, advertising SDKs, tracking pixels, or third-party telemetry.
 
 ## Data deletion
 
@@ -30,4 +35,4 @@ You can delete the extension's stored data by removing blocked domains in the op
 
 ## Contact
 
-For privacy questions, contact the developer using the support contact listed on the Chrome Web Store listing.
+For privacy questions, email support@focuh.com.

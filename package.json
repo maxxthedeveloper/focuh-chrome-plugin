@@ -1,7 +1,17 @@
 {
-  "name": "focuh-challenge",
-  "version": "0.1.2",
+  "name": "focuh",
+  "version": "0.2.0",
   "private": true,
+  "description": "Focuh Chrome extension: local-first website blocker with focus challenges, work hours and a daily time limit.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxxthedeveloper/focuh-chrome-plugin.git"
+  },
+  "homepage": "https://focuh.com/chrome-extension",
+  "bugs": {
+    "email": "support@focuh.com"
+  },
+  "license": "UNLICENSED",
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
@@ -11,8 +21,8 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
+    "@untitledui/icons": "^0.0.22",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.468.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

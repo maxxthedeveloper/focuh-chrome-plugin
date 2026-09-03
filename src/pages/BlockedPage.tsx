@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { ActivityGrid } from '../components/ActivityGrid';
 import { buildActivityDays } from '../lib/activity';
 import { isValidChallenge, todayKey } from '../lib/dates';
-import { getSettings, type CommitmentSettings } from '../lib/storage';
+import { getSettings, getUsage, type CommitmentSettings, type UsageState } from '../lib/storage';
+import { usedSecondsOn } from '../lib/tracking';
 
 const DISTRACTION_COPY = [
   'This costs attention.',
@@ -39,9 +40,11 @@ const DISTRACTION_COPY = [
 
 export function BlockedPage() {
   const [settings, setSettings] = useState<CommitmentSettings | null>(null);
+  const [usage, setUsage] = useState<UsageState | null>(null);
 
   useEffect(() => {
     void getSettings().then(setSettings);
+    void getUsage().then(setUsage);
   }, []);
 
   const activityDays = useMemo(() => {
@@ -68,35 +71,64 @@ export function BlockedPage() {
 
   const validChallenge = isValidChallenge(settings.challenge);
   const distractedToday = settings.dailyAttempts[todayKey()] ?? 0;
-  const distractionCopy = getDistractionCopy(distractedToday);
+  const allowanceCopy = getAllowanceCopy(settings, usage);
+  const distractionCopy = allowanceCopy ?? getDistractionCopy(distractedToday);
 
   return (
     <BlockedShell>
-      <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center gap-10 px-6 py-12 text-center sm:gap-12 sm:px-10">
-        <section className="flex max-w-xl flex-col items-center gap-3" aria-label="Blocked attempts today">
-          <div className="text-[clamp(2.25rem,4vw,3.5rem)] font-semibold leading-none tracking-[-0.02em] tabular-nums text-[var(--color-text-primary)]">
-            {distractedToday}
+      <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center px-6 py-20 text-center sm:px-10">
+        <div className="flex w-full flex-col items-center gap-12 sm:gap-14">
+          <div className="flex items-center gap-2.5 text-[var(--color-text-tertiary)]">
+            <img
+              src="/icons/icon-32.png"
+              alt=""
+              className="size-6 rounded-[6px] opacity-80"
+              aria-hidden="true"
+            />
+            <span className="type-overline">Focuh</span>
           </div>
-          <div className="type-label text-[var(--color-text-secondary)]">
-            times distracted
-          </div>
-          {distractionCopy && (
-            <p key={distractionCopy} className="blocked-copy type-context mt-2 max-w-lg text-balance text-[var(--color-text-tertiary)]">
-              {distractionCopy}
-            </p>
-          )}
-        </section>
 
-        {validChallenge && activityDays.length > 0 && (
-          <ActivityGrid days={activityDays} />
-        )}
+          <section className="flex max-w-xl flex-col items-center gap-3" aria-label="Blocked attempts today">
+            <div className="text-[clamp(3.75rem,8vw,6.5rem)] font-semibold leading-none tracking-[-0.02em] tabular-nums text-[var(--color-text-primary)]">
+              {distractedToday}
+            </div>
+            <div className="type-label text-[var(--color-text-secondary)]">
+              times distracted
+            </div>
+            {distractionCopy && (
+              <p key={distractionCopy} className="blocked-copy type-context mt-3 max-w-xl text-balance text-[var(--color-text-tertiary)]">
+                {distractionCopy}
+              </p>
+            )}
+          </section>
+
+          {validChallenge && activityDays.length > 0 && (
+            <div className="w-full max-w-2xl border-t border-[var(--color-border)] pt-10 sm:pt-12">
+              <ActivityGrid days={activityDays} />
+            </div>
+          )}
+        </div>
       </main>
     </BlockedShell>
   );
 }
 
 function BlockedShell({ children }: { children: ReactNode }) {
-  return <div className="blocked-screen min-h-screen bg-[var(--color-canvas)] text-[var(--color-text-primary)]">{children}</div>;
+  return (
+    <div className="blocked-screen min-h-screen bg-[var(--color-canvas)] text-[var(--color-text-primary)]">
+      {children}
+      <footer className="fixed inset-x-0 bottom-5 flex justify-center px-6">
+        <a
+          href="https://focuh.com"
+          target="_blank"
+          rel="noreferrer"
+          className="rounded-md px-2 py-1 text-[12px] font-medium leading-4 text-[var(--color-text-tertiary)] transition hover:text-[var(--color-text-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-border-strong)]"
+        >
+          focuh.com
+        </a>
+      </footer>
+    </div>
+  );
 }
 
 function getDistractionCopy(count: number): string | null {
@@ -105,4 +137,24 @@ function getDistractionCopy(count: number): string | null {
   }
 
   return DISTRACTION_COPY[Math.min(count, DISTRACTION_COPY.length) - 1];
+}
+
+function getAllowanceCopy(settings: CommitmentSettings, usage: UsageState | null): string | null {
+  const blockedByAllowance =
+    new URLSearchParams(window.location.search).get('reason') === 'allowance';
+
+  if (!blockedByAllowance || settings.dailyAllowanceMinutes <= 0) {
+    return null;
+  }
+
+  const remainingSeconds = usage
+    ? Math.max(0, settings.dailyAllowanceMinutes * 60 - usedSecondsOn(usage, todayKey()))
+    : 0;
+
+  if (remainingSeconds > 0) {
+    const remainingMinutes = Math.ceil(remainingSeconds / 60);
+    return `You have ${remainingMinutes} of your ${settings.dailyAllowanceMinutes} minutes left today.`;
+  }
+
+  return `You've used your ${settings.dailyAllowanceMinutes} minutes for today.`;
 }
